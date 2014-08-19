@@ -10,7 +10,7 @@ TODO
 libcurl, libfastrpc
 
 ## Desired usage:
-
+```c++ 
 #include <frpcaclient.h>
 
 int main() {
@@ -31,3 +31,4 @@ int main() {
     }
     return 0;
 }
+```
