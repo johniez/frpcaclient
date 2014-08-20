@@ -9,6 +9,10 @@
 #include "frpcdata.h"
 
 
+namespace frpc {
+namespace aclient {
+
+
 class Request::PrivateImpl {
     httpcurl::Req request;
   public:
@@ -27,6 +31,108 @@ class Request::PrivateImpl {
     void prepare(const std::string &method,
                  const FRPC::Value_t &param1) {
         request.dataToPost(frpcdata::dumps(method.c_str(), &param1, 0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, 0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3,
+                 const FRPC::Value_t &param4) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, &param4, 0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3,
+                 const FRPC::Value_t &param4,
+                 const FRPC::Value_t &param5) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, &param4, &param5, 0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3,
+                 const FRPC::Value_t &param4,
+                 const FRPC::Value_t &param5,
+                 const FRPC::Value_t &param6) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, &param4, &param5, &param6, 0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3,
+                 const FRPC::Value_t &param4,
+                 const FRPC::Value_t &param5,
+                 const FRPC::Value_t &param6,
+                 const FRPC::Value_t &param7) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, &param4, &param5, &param6, &param7, 0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3,
+                 const FRPC::Value_t &param4,
+                 const FRPC::Value_t &param5,
+                 const FRPC::Value_t &param6,
+                 const FRPC::Value_t &param7,
+                 const FRPC::Value_t &param8) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, &param4, &param5, &param6, &param7, &param8,
+                    0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3,
+                 const FRPC::Value_t &param4,
+                 const FRPC::Value_t &param5,
+                 const FRPC::Value_t &param6,
+                 const FRPC::Value_t &param7,
+                 const FRPC::Value_t &param8,
+                 const FRPC::Value_t &param9) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, &param4, &param5, &param6, &param7, &param8,
+                    &param9, 0x0));
+    }
+
+    void prepare(const std::string &method,
+                 const FRPC::Value_t &param1,
+                 const FRPC::Value_t &param2,
+                 const FRPC::Value_t &param3,
+                 const FRPC::Value_t &param4,
+                 const FRPC::Value_t &param5,
+                 const FRPC::Value_t &param6,
+                 const FRPC::Value_t &param7,
+                 const FRPC::Value_t &param8,
+                 const FRPC::Value_t &param9,
+                 const FRPC::Value_t &param10) {
+        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+                    &param3, &param4, &param5, &param6, &param7, &param8,
+                    &param9, &param10, 0x0));
     }
 
     bool success() const {
@@ -76,6 +182,100 @@ void Request::prepare(const std::string &method,
     impl->prepare(method, param1);
 }
 
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2) {
+    impl->prepare(method, param1, param2);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3) {
+    impl->prepare(method, param1, param2, param3);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3,
+                      const FRPC::Value_t &param4) {
+    impl->prepare(method, param1, param2, param3, param4);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3,
+                      const FRPC::Value_t &param4,
+                      const FRPC::Value_t &param5) {
+    impl->prepare(method, param1, param2, param3, param4, param5);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3,
+                      const FRPC::Value_t &param4,
+                      const FRPC::Value_t &param5,
+                      const FRPC::Value_t &param6) {
+    impl->prepare(method, param1, param2, param3, param4, param5, param6);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3,
+                      const FRPC::Value_t &param4,
+                      const FRPC::Value_t &param5,
+                      const FRPC::Value_t &param6,
+                      const FRPC::Value_t &param7) {
+    impl->prepare(method, param1, param2, param3, param4, param5, param6,
+                  param7);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3,
+                      const FRPC::Value_t &param4,
+                      const FRPC::Value_t &param5,
+                      const FRPC::Value_t &param6,
+                      const FRPC::Value_t &param7,
+                      const FRPC::Value_t &param8) {
+    impl->prepare(method, param1, param2, param3, param4, param5, param6,
+                  param7, param8);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3,
+                      const FRPC::Value_t &param4,
+                      const FRPC::Value_t &param5,
+                      const FRPC::Value_t &param6,
+                      const FRPC::Value_t &param7,
+                      const FRPC::Value_t &param8,
+                      const FRPC::Value_t &param9) {
+    impl->prepare(method, param1, param2, param3, param4, param5, param6,
+                  param7, param8, param9);
+}
+
+void Request::prepare(const std::string &method,
+                      const FRPC::Value_t &param1,
+                      const FRPC::Value_t &param2,
+                      const FRPC::Value_t &param3,
+                      const FRPC::Value_t &param4,
+                      const FRPC::Value_t &param5,
+                      const FRPC::Value_t &param6,
+                      const FRPC::Value_t &param7,
+                      const FRPC::Value_t &param8,
+                      const FRPC::Value_t &param9,
+                      const FRPC::Value_t &param10) {
+    impl->prepare(method, param1, param2, param3, param4, param5, param6,
+                  param7, param8, param9, param10);
+}
+
 bool Request::success() const {
     return impl->success();
 }
@@ -105,4 +305,8 @@ void ServerProxy::add(Request &req) {
 int ServerProxy::wait() {
     return impl->wait();
 }
+
+
+}  // namespace aclient
+}  // namespace frpc
 

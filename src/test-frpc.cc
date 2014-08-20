@@ -3,8 +3,8 @@
 int main() {
     FRPC::Pool_t pool;
 
-    ServerProxy proxy;
-    Request req("http://localhost:4040/RPC2");
+    frpc::aclient::ServerProxy proxy;
+    frpc::aclient::Request req("http://localhost:4040/RPC2");
     req.prepare("testMethod", pool.Int(1));
 
     proxy.add(req);
