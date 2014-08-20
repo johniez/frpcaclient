@@ -284,11 +284,7 @@ int Request::statusCode() const {
     return impl->statusCode();
 }
 
-FRPC::Value_t &Request::response(FRPC::Pool_t &pool) {
-    return impl->response(pool);
-}
-
-const FRPC::Value_t &Request::response(FRPC::Pool_t &pool) const {
+FRPC::Value_t &Request::response(FRPC::Pool_t &pool) const {
     return impl->response(pool);
 }
 

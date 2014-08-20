@@ -111,8 +111,7 @@ class Request {
     int statusCode() const;
 
     /// Get last call frpc data received from remote server.
-    FRPC::Value_t &response(FRPC::Pool_t &pool);
-    const FRPC::Value_t &response(FRPC::Pool_t &pool) const;
+    FRPC::Value_t &response(FRPC::Pool_t &pool) const;
 
     friend class ServerProxy;
 };
