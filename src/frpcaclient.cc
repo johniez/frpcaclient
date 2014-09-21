@@ -15,9 +15,13 @@ namespace aclient {
 
 class Request::PrivateImpl {
     httpcurl::Req request;
+    bool useBinary;
+    unsigned char protMajor;
+    unsigned char protMinor;
   public:
-    PrivateImpl(const char *url, bool binary)
-      : request(url)
+    explicit PrivateImpl(const char *url)
+      : request(url), useBinary(false),
+        protMajor(2), protMinor(0)
     {}
 
     httpcurl::Req &data() {
@@ -27,18 +31,21 @@ class Request::PrivateImpl {
     void setOpts(const FRPC::ServerProxy_t::Config_t &);
 
     void prepare(const std::string &method) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), 0x0));
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), 0x0));
     }
 
     void prepare(const std::string &method,
                  const FRPC::Value_t &param1) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, 0x0));
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, 0x0));
     }
 
     void prepare(const std::string &method,
                  const FRPC::Value_t &param1,
                  const FRPC::Value_t &param2) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     0x0));
     }
 
@@ -46,7 +53,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param1,
                  const FRPC::Value_t &param2,
                  const FRPC::Value_t &param3) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, 0x0));
     }
 
@@ -55,7 +63,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param2,
                  const FRPC::Value_t &param3,
                  const FRPC::Value_t &param4) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, &param4, 0x0));
     }
 
@@ -65,7 +74,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param3,
                  const FRPC::Value_t &param4,
                  const FRPC::Value_t &param5) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, &param4, &param5, 0x0));
     }
 
@@ -76,7 +86,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param4,
                  const FRPC::Value_t &param5,
                  const FRPC::Value_t &param6) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, &param4, &param5, &param6, 0x0));
     }
 
@@ -88,7 +99,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param5,
                  const FRPC::Value_t &param6,
                  const FRPC::Value_t &param7) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, &param4, &param5, &param6, &param7, 0x0));
     }
 
@@ -101,7 +113,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param6,
                  const FRPC::Value_t &param7,
                  const FRPC::Value_t &param8) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, &param4, &param5, &param6, &param7, &param8,
                     0x0));
     }
@@ -116,7 +129,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param7,
                  const FRPC::Value_t &param8,
                  const FRPC::Value_t &param9) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, &param4, &param5, &param6, &param7, &param8,
                     &param9, 0x0));
     }
@@ -132,7 +146,8 @@ class Request::PrivateImpl {
                  const FRPC::Value_t &param8,
                  const FRPC::Value_t &param9,
                  const FRPC::Value_t &param10) {
-        request.dataToPost(frpcdata::dumps(method.c_str(), &param1, &param2,
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        request.dataToPost(cnvt.dumps(method.c_str(), &param1, &param2,
                     &param3, &param4, &param5, &param6, &param7, &param8,
                     &param9, &param10, 0x0));
     }
@@ -150,14 +165,20 @@ class Request::PrivateImpl {
     }
 
     FRPC::Value_t &response(FRPC::Pool_t &pool) {
-        return frpcdata::loads(pool, request.getResponse());
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        return cnvt.loads(pool, request.getResponse());
     }
     const FRPC::Value_t &response(FRPC::Pool_t &pool) const {
-        return frpcdata::loads(pool, request.getResponse());
+        frpcdata::Converter cnvt(useBinary, protMajor, protMinor);
+        return cnvt.loads(pool, request.getResponse());
     }
 };
 
 void Request::PrivateImpl::setOpts(const FRPC::ServerProxy_t::Config_t &cfg) {
+    useBinary = false; // TODO cfg.useBinary;
+    // FIXME this settings is too late. prepare() methods are done using defaults! (versions and binary)...
+    protMajor = cfg.protocolVersion.versionMajor;
+    protMinor = cfg.protocolVersion.versionMinor;
     request.setConnectTimeout(cfg.connectTimeout);
     request.setReadTimeout(cfg.readTimeout);
 }
@@ -185,8 +206,8 @@ class ServerProxy::PrivateImpl {
 
 // Request pimpl calls
 
-Request::Request(const char *url, bool binary)
-    : impl(new PrivateImpl(url, binary))
+Request::Request(const char *url)
+    : impl(new PrivateImpl(url))
 {}
 
 void Request::prepare(const std::string &method) {

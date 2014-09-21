@@ -25,7 +25,7 @@ class Request {
     std::shared_ptr<PrivateImpl> impl;
   public:
     /// Create request to \c url frpc server ("http://host:port/RPC2").
-    explicit Request(const char *url, bool binary = false);
+    explicit Request(const char *url);
 
     /// Prepare a remote method call without parameters.
     void prepare(const std::string &method);

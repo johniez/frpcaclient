@@ -35,6 +35,12 @@ static const char *xheaders[] = {
     "Accept: text/xml"
 };
 
+/// binary protocol headers required to acomplish request.
+static const char *bheaders[] = {
+    "Content-Type: application/x-frpc",
+    "Accept: application/x-frpc"
+};
+
 
 }  // anon namespace
 
@@ -53,9 +59,7 @@ Req::Req(const char *url)
     if (handle == 0x0) {
         throw std::runtime_error("curl_easy_init() failed.");
     }
-    for (size_t i = 0; i < sizeof(xheaders) / sizeof(const char *); ++i) {
-        headers = addHeader(headers, xheaders[i]);
-    }
+    setHeaders(false); // always use XMLRPC
     curl_easy_setopt(handle, CURLOPT_URL, url);
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, receiveString);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response);
@@ -66,6 +70,14 @@ Req::Req(const char *url)
 Req::~Req() {
     if (headers) curl_slist_free_all(headers);
     curl_easy_cleanup(handle);
+}
+
+void Req::setHeaders(bool binary) {
+    const char **_headers = binary ? bheaders : xheaders;
+    size_t _size = binary ? sizeof(bheaders) : sizeof(xheaders);
+    for (size_t i = 0; i < _size / sizeof(const char *); ++i) {
+        headers = addHeader(headers, _headers[i]);
+    }
 }
 
 void Req::dataToPost(const std::string &data) {

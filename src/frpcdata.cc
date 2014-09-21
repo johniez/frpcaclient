@@ -49,12 +49,7 @@ struct VaListHolder {
 namespace frpcdata {
 
 
-std::string dumps(const char *methodname, va_list args) {
-    // TODO configurable from outside
-    int useBinary = false;
-    unsigned char protocolVersionMajor = 2;
-    unsigned char protocolVersionMinor = 1;
-
+std::string Converter::_dumps(const char *methodname, va_list args) const {
     // create writer
     StringWriter writer;
     // create marshaller
@@ -82,19 +77,24 @@ std::string dumps(const char *methodname, va_list args) {
 }
 
 
-std::string dumps(const char *methodname, ...) {
+std::string Converter::dumps(const char *methodname, ...) const {
     va_list args;
     va_start(args, methodname);
     VaListHolder _args(args);
-    return dumps(methodname, args);
+    return _dumps(methodname, args);
 }
 
 
 /// Read string data (xml) and return it as FRPC Value.
-FRPC::Value_t &loads(FRPC::Pool_t &pool, const std::string &data) {
+FRPC::Value_t &Converter::loads(
+        FRPC::Pool_t &pool,
+        const std::string &data) const
+{
     FRPC::TreeBuilder_t tree(pool);
     FRPC::UnMarshaller_t *xml = FRPC::UnMarshaller_t::create(
-            FRPC::UnMarshaller_t::XML_RPC, tree);
+            useBinary ? FRPC::UnMarshaller_t::BINARY_RPC
+                      : FRPC::UnMarshaller_t::XML_RPC,
+            tree);
     xml->unMarshall(data.c_str(), data.size(), FRPC::UnMarshaller_t::TYPE_METHOD_RESPONSE);
     FRPC::Value_t *res = tree.getUnMarshaledDataPtr();
     if (res == 0x0) {

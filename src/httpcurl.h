@@ -46,6 +46,9 @@ class Req {
 
     ~Req();
 
+    /// Set headers depending on request type (binary/xml).
+    void setHeaders(bool binary);
+
     /// Prepare data to post. Does not initiate data transfer.
     /// Request must be added using MultiReq::add() method
     /// and after successful call of MultiReq::run() should be response
