@@ -1,4 +1,5 @@
 #include <frpcaclient.h>
+#include <iostream>
 
 int main() {
     FRPC::Pool_t pool;
@@ -11,9 +12,13 @@ int main() {
     proxy.wait();
 
     if (req.success()) {
-        // process result ... FRPC::Struct(req.response(pool));
-        FRPC::Value_t &res = req.response(pool);
-        // TODO
+        // process result ...
+        const FRPC::Struct_t &res = FRPC::Struct(req.response(pool));
+        std::cerr << FRPC::Int(res["status"]) << "\n";
+        std::cerr << FRPC::String(res["statusMessage"]).c_str();
+    } else {
+        std::cerr << "Failed: " << req.getError() << "\n";
+        return 1;
     }
     return 0;
 }

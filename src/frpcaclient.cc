@@ -139,6 +139,10 @@ class Request::PrivateImpl {
         return request.succeeded();
     }
 
+    const char *getError() const {
+        return request.getErrorMsg();
+    }
+
     int statusCode() const {
         return request.httpStatus();
     }
@@ -278,6 +282,10 @@ void Request::prepare(const std::string &method,
 
 bool Request::success() const {
     return impl->success();
+}
+
+const char *Request::getError() const {
+    return impl->getError();
 }
 
 int Request::statusCode() const {

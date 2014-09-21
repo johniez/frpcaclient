@@ -107,6 +107,11 @@ class Request {
     /// Return true if last call was successful.
     bool success() const;
 
+    /// Get error message (valid if last call failed).
+    /// \retval 0x0 If request was successful.
+    /// \throw std::runtime_error when request did not failed or succeeded.
+    const char *getError() const;
+
     /// Get last call http status code.
     int statusCode() const;
 
