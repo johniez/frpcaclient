@@ -60,6 +60,7 @@ Req::Req(const char *url)
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, receiveString);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response);
     curl_easy_setopt(handle, CURLOPT_PRIVATE, this);
+    curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1);
 }
 
 Req::~Req() {
