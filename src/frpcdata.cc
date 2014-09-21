@@ -86,7 +86,7 @@ std::string dumps(const char *methodname, ...) {
     va_list args;
     va_start(args, methodname);
     VaListHolder _args(args);
-    return std::string();
+    return dumps(methodname, args);
 }
 
 
@@ -96,7 +96,14 @@ FRPC::Value_t &loads(FRPC::Pool_t &pool, const std::string &data) {
     FRPC::UnMarshaller_t *xml = FRPC::UnMarshaller_t::create(
             FRPC::UnMarshaller_t::XML_RPC, tree);
     xml->unMarshall(data.c_str(), data.size(), FRPC::UnMarshaller_t::TYPE_METHOD_RESPONSE);
-    return tree.getUnMarshaledData();
+    FRPC::Value_t *res = tree.getUnMarshaledDataPtr();
+    if (res == 0x0) {
+        //TODO exception?
+        return pool.Struct(
+            "status", pool.Int(tree.getUnMarshaledErrorNumber()),
+            "statusMessage", pool.String(tree.getUnMarshaledErrorMessage()));
+    }
+    return *res;
 }
 
 
