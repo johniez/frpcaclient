@@ -27,6 +27,9 @@ int main() {
 
     if (req.success()) {
         // process result ... FRPC::Struct(req.getResponse(pool));
+    } else {
+        // fail message: ... std::cerr << req.getError();
+        return 1;
     }
     return 0;
 }
