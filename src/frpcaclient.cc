@@ -24,6 +24,8 @@ class Request::PrivateImpl {
         return request;
     }
 
+    void setOpts(const FRPC::ServerProxy_t::Config_t &);
+
     void prepare(const std::string &method) {
         request.dataToPost(frpcdata::dumps(method.c_str(), 0x0));
     }
@@ -155,13 +157,23 @@ class Request::PrivateImpl {
     }
 };
 
+void Request::PrivateImpl::setOpts(const FRPC::ServerProxy_t::Config_t &cfg) {
+    request.setConnectTimeout(cfg.connectTimeout);
+    request.setReadTimeout(cfg.readTimeout);
+}
+
 
 class ServerProxy::PrivateImpl {
+    FRPC::ServerProxy_t::Config_t config;
     httpcurl::MultiReq proxy;
   public:
-    PrivateImpl(): proxy() {}
+    PrivateImpl(): config(), proxy() {}
+    PrivateImpl(const FRPC::ServerProxy_t::Config_t &cfg)
+        : config(cfg), proxy()
+    {}
 
     void add(Request::PrivateImpl *req) {
+        req->setOpts(config);
         proxy.add(req->data());
     }
 
@@ -300,6 +312,10 @@ FRPC::Value_t &Request::response(FRPC::Pool_t &pool) const {
 
 ServerProxy::ServerProxy()
     : impl(new PrivateImpl())
+{}
+
+ServerProxy::ServerProxy(const FRPC::ServerProxy_t::Config_t &cfg)
+    : impl(new PrivateImpl(cfg))
 {}
 
 void ServerProxy::add(Request &req) {

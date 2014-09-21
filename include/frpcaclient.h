@@ -10,6 +10,7 @@
 #include <memory>
 #include <string>
 #include <frpc.h>
+#include <frpcserverproxy.h>
 
 namespace frpc {
 namespace aclient {
@@ -128,6 +129,7 @@ class ServerProxy {
     std::shared_ptr<PrivateImpl> impl;
   public:
     ServerProxy();
+    ServerProxy(const FRPC::ServerProxy_t::Config_t &);
 
     /// Add request to process. Remote method is not called immediately,
     /// All added requests are processed on wait() method call.

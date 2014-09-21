@@ -127,6 +127,14 @@ const std::string &Req::getResponse() const {
     return response;
 }
 
+void Req::setConnectTimeout(int msec) {
+    curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT_MS, msec);
+}
+
+void Req::setReadTimeout(int msec) {
+    curl_easy_setopt(handle, CURLOPT_TIMEOUT_MS, msec);
+}
+
 
 #define MAX_WAIT_MSECS 30*1000
 
@@ -157,6 +165,7 @@ int MultiReq::run() {
 
     do {
         int numfds = 0;
+        // note - each easy_handler has own timeout settings...
         int res = curl_multi_wait(m_handler, NULL, 0, MAX_WAIT_MSECS, &numfds);
         if (res != CURLM_OK) {
             throw std::runtime_error("curl_multi_wait() error.");

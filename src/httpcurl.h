@@ -72,6 +72,10 @@ class Req {
     /// Get data received from remote server.
     const std::string &getResponse() const;
 
+    /// Set timeouts in msec.
+    void setConnectTimeout(int msec);
+    void setReadTimeout(int msec);
+
     friend class MultiReq;
 };
 
